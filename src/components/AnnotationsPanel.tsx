@@ -3,7 +3,7 @@ import { fromDateTimeLocalInput, toDateTimeLocalInput } from "@/lib/utils/time";
 import { cn } from "@/lib/utils/style";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
-import { PlusIcon, TrashIcon } from "./icons";
+import { Plus, Trash2 } from "lucide-react";
 
 interface Props {
   datasetId?: string;
@@ -41,10 +41,10 @@ export function AnnotationsPanel({
   };
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+    <div className="rounded-xl border border-slate-200 bg-white p-3 md:p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
       <div className="flex items-center justify-between">
-        <p className="text-sm font-semibold text-slate-800">Annotations</p>
-        <span className="text-xs text-slate-500">{annotations.length} total</span>
+        <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">Annotations</p>
+        <span className="text-xs text-slate-500 dark:text-slate-400">{annotations.length} total</span>
       </div>
 
       <form className="mt-3 space-y-2" onSubmit={handleSubmit}>
@@ -52,7 +52,7 @@ export function AnnotationsPanel({
           type="datetime-local"
           value={timestamp}
           onChange={(e) => setTimestamp(e.target.value)}
-          className="h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none ring-2 ring-transparent transition hover:border-slate-300 focus:ring-slate-200"
+          className="h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none ring-2 ring-transparent transition hover:border-slate-300 focus:ring-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:hover:border-slate-700 dark:focus:ring-slate-800"
           disabled={!datasetId}
         />
         <div className="flex items-center gap-2">
@@ -61,7 +61,7 @@ export function AnnotationsPanel({
             placeholder="Deploy v2.3"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="h-10 flex-1 rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none ring-2 ring-transparent transition hover:border-slate-300 focus:ring-slate-200 disabled:bg-slate-50"
+            className="h-10 flex-1 rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none ring-2 ring-transparent transition hover:border-slate-300 focus:ring-slate-200 disabled:bg-slate-50 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:placeholder-slate-500 dark:hover:border-slate-700 dark:focus:ring-slate-800 dark:disabled:bg-slate-900"
             disabled={!datasetId}
           />
           <button
@@ -69,10 +69,10 @@ export function AnnotationsPanel({
             disabled={!datasetId || text.trim().length === 0 || isCreating}
             className={cn(
               "flex h-10 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-white transition",
-              "bg-blue-600 hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300",
+              "bg-blue-600 hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300 dark:disabled:bg-blue-900"
             )}
           >
-            <PlusIcon className="h-4 w-4" />
+            <Plus className="h-4 w-4" />
             Add
           </button>
         </div>
@@ -82,27 +82,27 @@ export function AnnotationsPanel({
         {annotations.map((annotation) => (
           <div
             key={annotation.id}
-            className="flex items-start justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2"
+            className="flex items-start justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-950"
           >
             <div>
-              <p className="text-sm font-medium text-slate-800">{annotation.text}</p>
-              <p className="text-xs text-slate-500">
+              <p className="text-sm font-medium text-slate-800 dark:text-slate-100">{annotation.text}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 {format(annotation.timestamp * 1000, "PPpp")}
               </p>
             </div>
             <button
               type="button"
               onClick={() => onDelete(annotation.id)}
-              className="rounded-md p-1 text-slate-500 transition hover:bg-slate-200"
+              className="rounded-md p-1 text-slate-500 transition hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800"
               disabled={isDeleting}
               aria-label="Delete annotation"
             >
-              <TrashIcon className="h-4 w-4" />
+              <Trash2 className="h-4 w-4" />
             </button>
           </div>
         ))}
         {annotations.length === 0 ? (
-          <p className="text-sm text-slate-500">No annotations yet.</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">No annotations yet.</p>
         ) : null}
       </div>
     </div>
